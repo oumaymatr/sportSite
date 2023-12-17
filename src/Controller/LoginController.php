@@ -11,6 +11,7 @@ use Doctrine\ORM\EntityManager;
 use App\Repository\SportRepository;
 use Doctrine\Persistence\ObjectManager;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\Cookie;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -35,6 +36,29 @@ class LoginController extends AbstractController
         }
     
         $user = new User();
+        $cookies = $request->cookies;
+        // Vérifier si le paramètre de pré-remplissage est présent
+        $preRemplir = $request->query->get('preRemplir', false);
+
+        // Pré-remplir le formulaire si nécessaire
+        if ($preRemplir) {
+            if ($cookies->has('user_nom')) {
+                $user->setNom($cookies->get('user_nom'));
+            }
+
+            if ($cookies->has('user_prenom')) {
+                $user->setPrenom($cookies->get('user_prenom'));
+            }
+
+            if ($cookies->has('user_departement')) {
+                $user->setDepartement($cookies->get('user_departement'));
+            }
+
+            if ($cookies->has('user_email')) {
+                $user->setEmail($cookies->get('user_email'));
+            }
+        }
+
         $form = $this->createForm(UserType::class, $user, ['sportChoices' => $sportChoices]);
         $form->handleRequest($request);
     
@@ -73,7 +97,7 @@ class LoginController extends AbstractController
                 return $this->redirectToRoute('recherche');
             }         
         }
-    
+         
         return $this->render('inscription.html.twig', [
             'formHome' => $form->createView(),
         ]);
