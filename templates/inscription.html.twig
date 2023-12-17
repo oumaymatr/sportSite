@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+{% form_theme formHome 'bootstrap_4_layout.html.twig' %}
+{% block title %}Inscription{% endblock %}
+{% block body %}
+    <h1>Le Site des Rencontres Sportives</h1>
+
+    {{form_start(formHome)}}
+    <h2>Vos coordonnées:</h2>
+    {{form_row(formHome.nom, {'label':"Nom:",'attr':{'placeholder':"Votre nom"}})}}
+    {{form_row(formHome.prenom, {'label':"Prenom:",'attr':{'placeholder':"Votre prénom"}})}}
+    {{form_row(formHome.departement, {'label':"Département:",'attr':{'placeholder':"Votre département"}})}}
+    {{form_row(formHome.email, {'label':"Adresse Email:",'attr':{'placeholder':"Votre mail"}})}}
+    <hr>
+    <h2>Vos pratiques Sportives:</h2>
+    {{form_row(formHome.sportPratique, {'label':"Sport Pratiqué:"})}}
+    {# <p style="display: inline-block;">OU: Ajouter un sport à la liste:</p> #}
+    {{form_row(formHome.sportPratiqueCustom, {'label':'OU: Ajouter un sport à la liste:','attr':{'placeholder':"Ajouter un sport"}})}}
+    <button type="submit" name="ajouterSport" id="ajouterSport" class="btn btn-success">Ajouter</button>    
+    <hr>
+     {{form_row(formHome.niveau)}}
+    <hr>
+    <button type="submit" class="btn btn-success">Envoyer</button>    
+    <button type="submit" class="btn btn-success">Effacer</button>
+        
+    {{form_end(formHome)}}
+
+{% endblock %}
