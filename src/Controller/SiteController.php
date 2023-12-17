@@ -31,43 +31,45 @@ class SiteController extends AbstractController
     }
 
     #[Route("/", name: "home")]
-    public function index(Request $request,SessionInterface $session): Response
-    {
-        $form = $this->createForm(EmailFormType::class);
-        $form->handleRequest($request);
-        $sports = $this->entityManager->getRepository(Sport::class)->findAll();
-        if ($form->isSubmitted() && $form->isValid()) {
-            $email = $form->get('email')->getData();
-    
-            $user = $this->entityManager->getRepository(User::class)->findOneBy(['email' => $email]);
+    public function index(Request $request, SessionInterface $session): Response
+{
+    $form = $this->createForm(EmailFormType::class);
+    $form->handleRequest($request);
+    $sports = $this->entityManager->getRepository(Sport::class)->findAll();
 
-            if ($user) {
-                 // Email exists
-                    $session->set('user_data', [
-                        'user_nom' => $user->getNom(),
-                        'user_prenom' => $user->getPrenom(),
-                        'user_departement' => $user->getDepartement(),
-                        'user_email' => $user->getEmail(),
-                    ]);
-                    $response = new RedirectResponse($this->generateUrl('welcome', ['preRemplir' => true]));                    $response->headers->setCookie(new Cookie('user_nom', $user->getNom()));
-                    $response->headers->setCookie(new Cookie('user_prenom', $user->getPrenom()));
-                    $response->headers->setCookie(new Cookie('user_departement', $user->getDepartement()));
-                    $response->headers->setCookie(new Cookie('user_email', $user->getEmail()));
-                    $response->send();
-                return $this->render('welcome.html.twig', [
-                    'user' => $user,
-                ]);
-            } else {
-                // Email does not exist
-                return $this->render('not_found.html.twig');
-            }
+    if ($form->isSubmitted() && $form->isValid()) {
+        $email = $form->get('email')->getData();
+
+        $user = $this->entityManager->getRepository(User::class)->findOneBy(['email' => $email]);
+
+        if ($user) {
+            // Email exists
+            $session->set('user_data', [
+                'user_nom' => $user->getNom(),
+                'user_prenom' => $user->getPrenom(),
+                'user_departement' => $user->getDepartement(),
+                'user_email' => $user->getEmail(),
+            ]);
+
+            $response = new RedirectResponse($this->generateUrl('welcome', ['preRemplir' => true]));
+            $response->headers->setCookie(new Cookie('user_nom', $user->getNom()));
+            $response->headers->setCookie(new Cookie('user_prenom', $user->getPrenom()));
+            $response->headers->setCookie(new Cookie('user_departement', $user->getDepartement()));
+            $response->headers->setCookie(new Cookie('user_email', $user->getEmail()));
+            $response->send();
+            return $response; 
+            return $this->redirectToRoute('welcome');
+        } else {
+            // Email does not exist
+            return $this->render('not_found.html.twig');
         }
-    
-        return $this->render('index.html.twig', [
-            'form' => $form->createView(),
-            'sports' => $sports,
-        ]);
     }
+
+    return $this->render('index.html.twig', [
+        'form' => $form->createView(),
+        'sports' => $sports,
+    ]);
+}
 
    
 
