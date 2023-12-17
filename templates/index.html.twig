@@ -1,10 +1,19 @@
 {% extends 'base.html.twig' %}
+
 {% block title %}Site de rencontre{% endblock %}
+
 {% block body %}
     <h1>Le Site des Rencontres Sportives</h1>
-    <h3>Salut</h3>
-    <a href="/">Home</a>
-    <a href="inscription">Login</a>
+    <a href="inscription">S'inscrire</a>
+    <h2>Liste des Sports:</h2>
+    <ul>
+        {% for sport in sports %}
+            <li>{{ sport.nom }}</li>
+        {% endfor %}
+    </ul>
+    {{ form_start(form) }}
+    {{ form_row(form.email) }}
+    <br>
+    <button type="submit">Continuer</button>
+    {{ form_end(form) }}
 {% endblock %}
-
-
