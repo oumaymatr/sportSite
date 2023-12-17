@@ -20,8 +20,20 @@
      {{form_row(formHome.niveau)}}
     <hr>
     <button type="submit" class="btn btn-success">Envoyer</button>    
-    <button type="submit" class="btn btn-success">Effacer</button>
+    <button type="submit" class="btn btn-success" id="effacerChamps">Effacer</button>
         
     {{form_end(formHome)}}
+     <script>
+        document.getElementById('effacerChamps').addEventListener('click', function() {
+            // Clear all form fields
+            document.getElementById('{{ formHome.nom.vars.id }}').value = '';
+            document.getElementById('{{ formHome.prenom.vars.id }}').value = '';
+            document.getElementById('{{ formHome.departement.vars.id }}').value = '';
+            document.getElementById('{{ formHome.email.vars.id }}').value = '';
+            document.getElementById('{{ formHome.sportPratique.vars.id }}').value = '';
+            document.getElementById('{{ formHome.sportPratiqueCustom.vars.id }}').value = '';
+            document.getElementById('{{ formHome.niveau.vars.id }}').value = '';
+        });
+    </script>
 
 {% endblock %}
