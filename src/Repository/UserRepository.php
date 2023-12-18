@@ -45,4 +45,11 @@ class UserRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
+        public function findDistinctDepartements()
+        {
+            return $this->createQueryBuilder('u')
+                ->select('DISTINCT u.departement')
+                ->getQuery()
+                ->getResult();
+        }
 }

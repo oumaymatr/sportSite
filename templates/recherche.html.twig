@@ -1,3 +1,22 @@
 {% extends 'base.html.twig' %}
 {% block title %}Recherche{% endblock %}
-{% block body %}Reechercher helllo alors{% endblock %}
+{% block body %}
+    <h1>Recherche</h1>
+    <a href="/">Home</a>
+    <br>
+
+    {{ form_start(form) }}
+
+    <h2>Filtrer par:</h2>
+    {{ form_row(form.sport) }}
+    {{ form_row(form.niveau) }}
+    {{ form_row(form.departement) }}
+
+    <button type="submit" class="btn btn-success">Rechercher</button>
+
+    {{ form_end(form) }}
+
+
+
+
+{% endblock %}

@@ -5,7 +5,9 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Entity\Sport;
 use App\Entity\EmailForm;
+use App\Entity\Search;
 use App\Form\EmailFormType;
+use App\Form\SearchType;
 use Doctrine\Persistence\ObjectManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Cookie;
@@ -74,9 +76,30 @@ class SiteController extends AbstractController
    
 
     #[Route("/recherche", name: 'recherche')]
-    public function recherche()
+    public function recherche(Request $request)
     {
-        return $this->render('recherche.html.twig');
+        $sports = $this->entityManager->getRepository(Sport::class)->findAll();
+        $sportChoices = [];
+        foreach ($sports as $sport) {
+            $sportChoices[$sport->getNom()] = $sport->getNom();
+        }
+    
+        $departements = $this->entityManager->getRepository(User::class)->findDistinctDepartements();
+        $departementChoices = [];
+        foreach ($departements as $departement) {
+            $departementChoices[$departement['departement']] = $departement['departement'];
+        }
+    
+        $form = $this->createForm(SearchType::class, null, [
+            'sportChoices' => $sportChoices,
+            'departementChoices' => $departementChoices,
+        ]);
+        $form->handleRequest($request);
+    
+        return $this->render('recherche.html.twig', [
+            'form' => $form->createView(),
+            'sports' => $sports,
+        ]);
     }
    
     #[Route("/welcome", name: "welcome")]
