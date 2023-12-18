@@ -17,7 +17,7 @@ class SearchType extends AbstractType
             ->add('sport', ChoiceType::class, [
                 'choices' => $options['sportChoices'],
                 'placeholder' => '--Sélectionner--',
-                'label' => 'Sport',
+                'label' => 'Sport:',
             ])
             ->add('niveau', ChoiceType::class, [
                 'choices' => [
@@ -27,12 +27,12 @@ class SearchType extends AbstractType
                     'Supporter' => 'supporter',
                 ],
                 'placeholder' => '--Sélectionner--',
-                'label' => 'Niveau',
+                'label' => 'Niveau:',
             ])
             ->add('departement', ChoiceType::class, [
                 'choices' => $options['departementChoices'],
-                'label' => 'Département',
-                'placeholder' => 'Choisissez un département',
+                'label' => 'Département:',
+                'placeholder' => '--Sélectionner--',
             ]);
             }
 

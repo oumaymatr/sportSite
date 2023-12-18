@@ -1,19 +1,40 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Site de rencontre{% endblock %}
+{% block title %}Site de rencontre
+{% endblock %}
 
 {% block body %}
-    <h1>Le Site des Rencontres Sportives</h1>
-    <a href="inscription">S'inscrire</a>
-    <h2>Liste des Sports:</h2>
-    <ul>
-        {% for sport in sports %}
-            <li>{{ sport.nom }}</li>
-        {% endfor %}
-    </ul>
-    {{ form_start(form) }}
-    {{ form_row(form.email) }}
-    <br>
-    <button type="submit">Continuer</button>
-    {{ form_end(form) }}
+	<nav class="navbar navbar-expand-lg bg-light" data-bs-theme="light">
+		<div class="container-fluid">
+			<a class="navbar-brand" href="#">Site des rencontres sportives</a>
+			<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor03" aria-controls="navbarColor03" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="navbarColor03">
+				<ul class="navbar-nav me-auto">
+					<li class="nav-item">
+						<a class="nav-link active" href="inscription">Inscription
+						</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+	<div class="content">
+		<br>
+		{{ form_start(form) }}
+        <label for="email">Email:</label>
+		<div class="d-flex">
+			{{ form_widget(form.email, {'label':"Email:" ,'attr': {'class': 'form-control', 'style': 'width: 450px;'}}) }}
+			<button type="submit" class="btn btn-success ml-2">Continuer</button>
+		</div>
+		{{ form_end(form) }}
+        <br>
+		<h2>Liste des Sports:</h2>
+		<ul>
+			{% for sport in sports %}
+				<li>{{ sport.nom }}</li>
+			{% endfor %}
+		</ul>
+	</div>
 {% endblock %}

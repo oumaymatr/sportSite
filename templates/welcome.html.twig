@@ -1,14 +1,38 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Welcome{% endblock %}
+{% block title %}Welcome
+{% endblock %}
 
 {% block body %}
-    {% if user is defined %}
-        <h3>Welcome, {{ user.user_prenom }}!</h3>
-        <a href="/">Home</a>
-        <a href="recherche">Search</a>
-        <a href="{{ path('inscription', {'preRemplir': true}) }}">S'inscrire pour un autre sport!</a>
-    {% else %}
-        <h3>Welcome!</h3>
-    {% endif %}
+	{% if user is defined %}
+		<nav class="navbar navbar-expand-lg bg-light" data-bs-theme="light">
+			<div class="container-fluid">
+				<a class="navbar-brand" href="#">Site des rencontres sportives</a>
+				<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor03" aria-controls="navbarColor03" aria-expanded="false" aria-label="Toggle navigation">
+					<span class="navbar-toggler-icon"></span>
+				</button>
+				<div class="collapse navbar-collapse" id="navbarColor03">
+					<ul class="navbar-nav me-auto">
+						<li class="nav-item">
+							<a class="nav-link active" href="/">Home
+							</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="{{ path('inscription', {'preRemplir': true}) }}">Inscription pour un autre sport</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="recherche">Recherche</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</nav>
+		<div class="content">
+            <br>
+			<h3>Bienvenue,
+				{{ user.user_prenom }}!</h3>
+		{% else %}
+			<h3>Désolé, utilisateur non trouvé!</h3>
+		{% endif %}
+	</div>
 {% endblock %}

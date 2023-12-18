@@ -1,39 +1,56 @@
 {% extends 'base.html.twig' %}
 {% form_theme formHome 'bootstrap_4_layout.html.twig' %}
-{% block title %}Inscription{% endblock %}
+{% block title %}Inscription
+{% endblock %}
 {% block body %}
-    <h1>Le Site des Rencontres Sportives</h1>
-     <a href="/">Home</a>
-    {{form_start(formHome)}}
-    <h2>Vos coordonnées:</h2>
-    {{form_row(formHome.nom, {'label':"Nom:",'attr':{'placeholder':"Votre nom"}})}}
-    {{form_row(formHome.prenom, {'label':"Prenom:",'attr':{'placeholder':"Votre prénom"}})}}
-    {{form_row(formHome.departement, {'label':"Département:",'attr':{'placeholder':"Votre département"}})}}
-    {{form_row(formHome.email, {'label':"Adresse Email:",'attr':{'placeholder':"Votre mail"}})}}
-    <hr>
-    <h2>Vos pratiques Sportives:</h2>
-    {{form_row(formHome.sportPratique, {'label':"Sport Pratiqué:"})}}
-    {# <p style="display: inline-block;">OU: Ajouter un sport à la liste:</p> #}
-    {{form_row(formHome.sportPratiqueCustom, {'label':'OU: Ajouter un sport à la liste:','attr':{'placeholder':"Ajouter un sport"}})}}
-    <button type="submit" name="ajouterSport" id="ajouterSport" class="btn btn-success">Ajouter</button>    
-    <hr>
-     {{form_row(formHome.niveau)}}
-    <hr>
-    <button type="submit" class="btn btn-success">Envoyer</button>    
-    <button type="submit" class="btn btn-success" id="effacerChamps">Effacer</button>
-        
-    {{form_end(formHome)}}
-     <script>
-        document.getElementById('effacerChamps').addEventListener('click', function() {
-            // Clear all form fields
-            document.getElementById('{{ formHome.nom.vars.id }}').value = '';
-            document.getElementById('{{ formHome.prenom.vars.id }}').value = '';
-            document.getElementById('{{ formHome.departement.vars.id }}').value = '';
-            document.getElementById('{{ formHome.email.vars.id }}').value = '';
-            document.getElementById('{{ formHome.sportPratique.vars.id }}').value = '';
-            document.getElementById('{{ formHome.sportPratiqueCustom.vars.id }}').value = '';
-            document.getElementById('{{ formHome.niveau.vars.id }}').value = '';
-        });
-    </script>
+	<nav class="navbar navbar-expand-lg bg-light" data-bs-theme="light">
+		<div class="container-fluid">
+			<a class="navbar-brand" href="/">Site des rencontres sportives</a>
+			<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor03" aria-controls="navbarColor03" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="navbarColor03">
+				<ul class="navbar-nav me-auto">
+					<li class="nav-item">
+						<a class="nav-link active" href="/">Home
+						</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+	<div class="content">
+		{{form_start(formHome)}}
+		<h2>Vos coordonnées:</h2>
+		{{form_row(formHome.nom, {'label':"Nom:",'attr':{'placeholder':"Votre nom",'style': 'width: 450px;'}})}}
+		{{form_row(formHome.prenom, {'label':"Prenom:",'attr':{'placeholder':"Votre prénom",'style': 'width: 450px;'}})}}
+		{{form_row(formHome.departement, {'label':"Département:",'attr':{'placeholder':"Votre département",'style': 'width: 450px;'}})}}
+		{{form_row(formHome.email, {'label':"Adresse Email:",'attr':{'placeholder':"Votre mail",'style': 'width: 450px;'}})}}
+		<br>
+		<h2>Vos pratiques Sportives:</h2>
+		{{form_row(formHome.sportPratique, {'label':"Sport Pratiqué:",'attr':{'style': 'width: 450px;'}})}}
+		{# <p style="display: inline-block;">OU: Ajouter un sport à la liste:</p> #}
+		{{form_row(formHome.sportPratiqueCustom, {'label':'OU: Ajouter un sport à la liste:','attr':{'placeholder':"Ajouter un sport",'style': 'width: 450px;'}})}}
+		<button type="submit" name="ajouterSport" id="ajouterSport" class="btn btn-success">Ajouter</button>
+		<br>
+        <br>
+		{{form_row(formHome.niveau, {'attr': {'style': 'width: 450px;'}})}}
+		<hr>
+		<button type="submit" class="btn btn-success">Envoyer</button>
+		<button type="submit" class="btn btn-success" id="effacerChamps">Effacer</button>
+
+		{{form_end(formHome)}}
+	</div>
+	<script>
+		document.getElementById('effacerChamps').addEventListener('click', function () { // Clear all form fields
+document.getElementById('{{ formHome.nom.vars.id }}').value = '';
+document.getElementById('{{ formHome.prenom.vars.id }}').value = '';
+document.getElementById('{{ formHome.departement.vars.id }}').value = '';
+document.getElementById('{{ formHome.email.vars.id }}').value = '';
+document.getElementById('{{ formHome.sportPratique.vars.id }}').value = '';
+document.getElementById('{{ formHome.sportPratiqueCustom.vars.id }}').value = '';
+document.getElementById('{{ formHome.niveau.vars.id }}').value = '';
+});
+	</script>
 
 {% endblock %}
