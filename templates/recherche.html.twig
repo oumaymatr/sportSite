@@ -3,6 +3,7 @@
 {% block body %}
     <h1>Recherche</h1>
     <a href="/">Home</a>
+    <a href="{{ path('inscription', {'preRemplir': true}) }}">Inscription</a>
     <br>
 
     {{ form_start(form) }}
@@ -13,10 +14,42 @@
     {{ form_row(form.departement) }}
 
     <button type="submit" class="btn btn-success">Rechercher</button>
+    <button type="submit" class="btn btn-success" id="effacerChamps">Effacer</button>
+
 
     {{ form_end(form) }}
+    {% if users is not empty %}
+        <h2>Résultats de la recherche :</h2>
+         <table style="width:20%">
+            <thead>
+                <tr>
+                    <th style="padding: 5px;">Nom</th>
+                    <th style="padding: 5px;">Département</th>
+                    <th style="padding: 5px;">Niveau</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for user in users %}
+                    <tr>
+                        <td style="padding: 5px;">{{ user.nom }} {{ user.prenom }}</td>
+                        <td style="padding: 5px;">{{ user.departement }}</td>
+                        <td style="padding: 5px;">{{ user.niveau }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% elseif formSubmitted  %}
+        <p>Aucun utilisateur trouvé.</p>   
+    {% endif %}
 
 
-
+<script>
+        document.getElementById('effacerChamps').addEventListener('click', function() {
+            // Clear all form fields
+            document.getElementById('{{ form.departement.vars.id }}').value = '';
+            document.getElementById('{{ form.sport.vars.id }}').value = '';
+            document.getElementById('{{ form.niveau.vars.id }}').value = '';
+        });
+    </script>
 
 {% endblock %}

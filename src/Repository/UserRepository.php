@@ -3,8 +3,9 @@
 namespace App\Repository;
 
 use App\Entity\User;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use App\Entity\Search;
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
 /**
  * @extends ServiceEntityRepository<User>
@@ -52,4 +53,28 @@ class UserRepository extends ServiceEntityRepository
                 ->getQuery()
                 ->getResult();
         }
+         // Ajoutez la méthode de recherche
+    public function findBySearchCriteria(Search $search)
+    {
+        $queryBuilder = $this->createQueryBuilder('u');
+
+        // Ajoutez des clauses WHERE en fonction des critères de recherche
+        if ($search->getSport()) {
+            $queryBuilder->andWhere('u.sportPratique = :sport')
+                         ->setParameter('sport', $search->getSport());
+        }
+
+        if ($search->getNiveau()) {
+            $queryBuilder->andWhere('u.niveau = :niveau')
+                         ->setParameter('niveau', $search->getNiveau());
+        }
+
+        if ($search->getDepartement()) {
+            $queryBuilder->andWhere('u.departement = :departement')
+                         ->setParameter('departement', $search->getDepartement());
+        }
+
+        // Exécutez la requête
+        return $queryBuilder->getQuery()->getResult();
+    }
 }

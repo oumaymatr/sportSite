@@ -94,11 +94,23 @@ class SiteController extends AbstractController
             'sportChoices' => $sportChoices,
             'departementChoices' => $departementChoices,
         ]);
+
         $form->handleRequest($request);
+        $users = [];
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            // Récupérer les critères de recherche
+            $searchCriteria = $form->getData();
     
+            // Effectuer la recherche dans la base de données
+            $users = $this->entityManager->getRepository(User::class)->findBySearchCriteria($searchCriteria);
+        }
+
         return $this->render('recherche.html.twig', [
             'form' => $form->createView(),
             'sports' => $sports,
+            'users' => $users,
+            'formSubmitted' => $form->isSubmitted(),
         ]);
     }
    
